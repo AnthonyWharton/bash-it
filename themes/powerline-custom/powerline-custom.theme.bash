@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-. "$BASH_IT/themes/powerline/powerline.base.bash"
+. "$BASH_IT/themes/powerline-custom/powerline-custom.base.bash"
 
-PROMPT_CHAR=${POWERLINE_PROMPT_CHAR:=""}
+PROMPT_CHAR=${POWERLINE_PROMPT_CHAR:="❯"}
 POWERLINE_LEFT_SEPARATOR=${POWERLINE_LEFT_SEPARATOR:=""}
+POWERLINE_RIGHT_SEPARATOR=${POWERLINE_RIGHT_SEPARATOR:=""}
+POWERLINE_LEFT_END=${POWERLINE_LEFT_END:=""}
+POWERLINE_RIGHT_END=${POWERLINE_RIGHT_END:=""}
+POWERLINE_PADDING=${POWERLINE_PADDING:=2}
 
 USER_INFO_SSH_CHAR=${POWERLINE_USER_INFO_SSH_CHAR:=" "}
 USER_INFO_THEME_PROMPT_COLOR=32
@@ -55,6 +59,7 @@ IN_VIM_THEME_PROMPT_TEXT="vim"
 
 HOST_THEME_PROMPT_COLOR=0
 
-POWERLINE_PROMPT=${POWERLINE_PROMPT:="user_info scm python_venv ruby cwd"}
+POWERLINE_LEFT_PROMPT=${POWERLINE_LEFT_PROMPT:="scm python_venv ruby cwd"}
+POWERLINE_RIGHT_PROMPT=${POWERLINE_RIGHT_PROMPT:="in_vim clock battery user_info"}
 
 safe_append_prompt_command __powerline_prompt_command
