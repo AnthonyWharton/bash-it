@@ -188,8 +188,20 @@ function __powerline_right_segment {
   (( SEGMENTS_AT_RIGHT += 1 ))
 }
 
-function __powerline_last_status_prompt {
-  [[ "$1" -ne 0 ]] && echo "$(set_color ${LAST_STATUS_THEME_PROMPT_COLOR} -) ${1} ${normal}"
+function __powerline_status_prompt {
+  local prompt_output=""
+
+  LAST_SEGMENT_COLOR=${LAST_STATUS_THEME_PROMPT_COLOR}
+  prompt_output+="$(set_color - ${LAST_SEGMENT_COLOR}) ${PROMPT_CHAR} "
+
+  if [[ ${last_status} -ne 0 ]]; then
+    prompt_output+="$(set_color ${LAST_SEGMENT_COLOR} ${LAST_STATUS_THEME_ERR_COLOR})${POWERLINE_LEFT_END}${normal}"
+    LAST_SEGMENT_COLOR=${LAST_STATUS_THEME_ERR_COLOR}
+    prompt_output+="$(set_color - ${LAST_SEGMENT_COLOR}) ${1} "
+  fi
+
+  prompt_output+="${normal}$(set_color ${LAST_SEGMENT_COLOR} -)${POWERLINE_LEFT_END}${normal} "
+  echo "${prompt_output}"
 }
 
 # function __powerline_prompt_command {
@@ -252,7 +264,7 @@ function __powerline_prompt_command {
     LEFT_PROMPT+="\033[${RIGHT_PROMPT_LENGTH}D"
   fi
 
-  PS1="${LEFT_PROMPT}${RIGHT_PROMPT}\n$(__powerline_last_status_prompt ${last_status})${PROMPT_CHAR} "
+  PS1="${LEFT_PROMPT}${RIGHT_PROMPT}\n$(__powerline_status_prompt ${last_status})"
 
   ## cleanup ##
   unset LAST_SEGMENT_COLOR \
