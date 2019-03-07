@@ -9,6 +9,6 @@ namely:
        (e.g. bold text)
  - [X] **Newly designed command line;** with a more colourful prompt and
        prettier last command status display.
- - [ ] **Fixed prompt width;** The width used to break when in a git-repo and
+ - [X] **Fixed prompt width;** The width used to break when in a git-repo and
        become narrower than the terminal width.
  - [ ] *Add future changes/ideas here...*
