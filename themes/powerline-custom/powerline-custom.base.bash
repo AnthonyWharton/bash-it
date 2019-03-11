@@ -190,14 +190,26 @@ function __powerline_right_segment {
 
 function __powerline_status_prompt {
   local prompt_output=""
+  local color=${LAST_STATUS_THEME_PROMPT_COLOR}
 
-  LAST_SEGMENT_COLOR=${LAST_STATUS_THEME_PROMPT_COLOR}
-  prompt_output+="$(set_color - ${LAST_SEGMENT_COLOR}) ${PROMPT_CHAR} "
+  if [[ "${THEME_CHECK_SUDO}" = true ]]; then
+    if sudo -n uptime 2>&1 | grep -q "load"; then
+      color=${LAST_STATUS_THEME_PROMPT_COLOR_SUDO}
+    fi
+  fi
+
+  if [[ "${USER}" = "root" ]]; then
+    prompt_output+="$(set_color - ${color}) ${PROMPT_CHAR_ROOT} "
+  else
+    prompt_output+="$(set_color - ${color}) ${PROMPT_CHAR} "
+  fi
+  LAST_SEGMENT_COLOR=${color}
 
   if [[ ${last_status} -ne 0 ]]; then
-    prompt_output+="$(set_color ${LAST_SEGMENT_COLOR} ${LAST_STATUS_THEME_ERR_COLOR})${POWERLINE_LEFT_END}${normal}"
-    LAST_SEGMENT_COLOR=${LAST_STATUS_THEME_ERR_COLOR}
-    prompt_output+="$(set_color - ${LAST_SEGMENT_COLOR}) ${1} "
+    color=${LAST_STATUS_THEME_ERR_COLOR}
+    prompt_output+="$(set_color ${LAST_SEGMENT_COLOR} ${color})${POWERLINE_LEFT_END}${normal}"
+    prompt_output+="$(set_color - ${color}) ${1} "
+    LAST_SEGMENT_COLOR=${color}
   fi
 
   prompt_output+="${normal}$(set_color ${LAST_SEGMENT_COLOR} -)${POWERLINE_LEFT_END}${normal} "
